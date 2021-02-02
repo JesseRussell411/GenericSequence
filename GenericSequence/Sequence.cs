@@ -12,16 +12,13 @@ namespace JesseRussell.Collections
     /// </summary>
     public readonly struct Sequence<T> : IEnumerable<T>, IEquatable<Sequence<T>>
     {
-        #region constructors      requirement: Value cannot be null
+        #region constructors
         public Sequence(ImmutableArray<T> elements) => Elements = elements;
-        public Sequence(IEnumerable<T> elements) => Elements = elements != null ? elements.ToImmutableArray() : emptyElements;
+        public Sequence(IEnumerable<T> elements) => Elements = elements?.ToImmutableArray() ?? emptyElements;
         #endregion
 
-        #region public auto Properties { get; }
+        #region public Properties
         public ImmutableArray<T> Elements { get; }
-        #endregion
-
-        #region public Properties { get; }
         public T this[int i] => Elements[i];
         public int Length => Elements.Length;
         #endregion
@@ -63,11 +60,11 @@ namespace JesseRussell.Collections
         public string ToString(string delim, string open = "(", string close = ")")
         {
             StringBuilder result = new StringBuilder();
-            result.Append(open);                                                      // opening character or string. ie: (
+            result.Append(open);                                           // opening character or string. ie: (
             var enu = Elements.GetEnumerator();
-            if (enu.MoveNext()) result.Append(enu.Current.ToString());                // first element, without deliminator
-            while (enu.MoveNext()) result.Append($"{delim}{enu.Current.ToString()}"); // additional elements, with deliminator
-            result.Append(close);                                                     // closing character or string. ie: )
+            if (enu.MoveNext()) result.Append(enu.Current.ToString());     // first element, without deliminator
+            while (enu.MoveNext()) result.Append($"{delim}{enu.Current}"); // additional elements, with deliminators
+            result.Append(close);                                          // closing character or string. ie: )
             return result.ToString();
         }
         public override string ToString() => ToString(", ");
