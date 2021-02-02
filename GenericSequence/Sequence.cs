@@ -8,7 +8,7 @@ using System.Text;
 namespace JesseRussell.Collections
 {
     /// <summary>
-    /// Represents a generic immutable sequence of T. Equality is based on value, not reference, like strings.
+    /// Represents a generic immutable sequence of T. Equality is, like strings, based on value not reference.
     /// </summary>
     public readonly struct Sequence<T> : IEnumerable<T>, IEquatable<Sequence<T>>
     {
